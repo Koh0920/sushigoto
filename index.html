@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#15100c">
+  <title>寿司GoTo — 流れる前に、捌け！</title>
+  <meta name="description" content="ポモドーロと回転寿司を融合したTODO＆時間管理アプリ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="寿司GoTo ホーム">
+      <span class="brand-mark"><img src="./assets/chef-pixel.webp" alt=""></span>
+      <span><strong>寿司GoTo</strong><small>流れる前に、捌け！</small></span>
+    </a>
+    <nav class="tabs" aria-label="メインメニュー">
+      <button class="tab phase-tab active" data-tab="prep"><span>01</span><b>仕込み</b></button>
+      <i class="phase-arrow" aria-hidden="true">▶</i>
+      <button class="tab phase-tab" data-tab="action"><span>02</span><b>実食</b></button>
+      <i class="phase-arrow" aria-hidden="true">▶</i>
+      <button class="tab phase-tab" data-tab="result"><span>03</span><b>精算</b></button>
+      <button class="tab utility-tab" data-tab="journal"><span>＋</span><b>営業日誌</b></button>
+    </nav>
+    <div class="daily-earnings">
+      <small>本日のお得額</small>
+      <strong id="headerEarnings">¥0</strong>
+      <span class="live-dot">営業中</span>
+    </div>
+  </header>
+
+  <main>
+    <section id="action" class="view" aria-labelledby="actionTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">PHASE 02 / ACTION</p><h1 id="actionTitle">本日の実食</h1></div>
+        <p class="date-stamp" id="dateStamp"></p>
+      </div>
+
+      <section class="belt-shell" aria-label="待機タスク">
+        <div class="belt-label"><span>奥のレーン</span><small>お皿を選んで、手元へ</small></div>
+        <div class="belt-window">
+          <div class="belt-track" id="beltTrack"></div>
+        </div>
+      </section>
+
+      <section class="focus-counter" id="focusCounter">
+        <div class="counter-edge"></div>
+        <div class="focus-visual">
+          <div class="plate-halo"></div>
+          <img id="focusImage" src="./assets/sushi-tokujo-pixel.webp" alt="特上皿の寿司">
+          <span class="plate-price" id="focusPrice">¥0</span>
+        </div>
+        <div class="focus-main">
+          <div class="focus-kicker"><span id="focusTier">—</span><span id="focusMinutes">—</span></div>
+          <div class="focus-title-row">
+            <h2 id="focusTitle">タスク未選択</h2>
+            <button class="icon-button" id="openExplorer" aria-label="タスクの詳細を開く">ⓘ</button>
+          </div>
+          <button class="asset-summary" id="assetSummary">📝 メモ 0　🔗 リンク 0　📄 資料 0</button>
+          <div class="timer-row">
+            <div class="timer-wrap">
+              <div class="timer" id="timer">00:00</div>
+              <div class="freshness" id="freshness"><span></span> 鮮度良好</div>
+            </div>
+            <div class="timer-side">
+              <div class="progress-rail"><div id="progressBar"></div></div>
+              <div class="controls">
+                <button class="btn btn-start" id="startTimer">▶ スタート</button>
+                <button class="btn btn-complete" id="completeTask">ごちそうさま！ <span>完食</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="empty-focus hidden" id="emptyFocus">
+        <span>🍵</span><h2>ただいま、お品切れです</h2><p>仕込みから新しいお仕事を登録しましょう。</p>
+        <button class="btn btn-start" data-go="prep">仕込みへ</button>
+      </div>
+    </section>
+
+    <section id="prep" class="view active" aria-labelledby="prepTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">PHASE 01 / PREPARATION</p><h1 id="prepTitle">仕込み場</h1></div>
+        <p class="heading-note">明日の自分へ、いいネタを。</p>
+      </div>
+      <div class="prep-grid">
+        <form id="taskForm" class="paper-card prep-form">
+          <span class="paper-pin">新規注文票</span>
+          <label for="taskTitle">お仕事の名前</label>
+          <input id="taskTitle" maxlength="80" placeholder="例：見積書を確認して返信" required>
+          <fieldset>
+            <legend>お皿を選ぶ</legend>
+            <div class="plate-options">
+              <label><input type="radio" name="plate" value="1"><span><img src="./assets/sushi-nami-pixel.webp" alt=""><b>並皿</b><small>5分 · ¥100</small></span></label>
+              <label><input type="radio" name="plate" value="2" checked><span><img src="./assets/sushi-jo-pixel.webp" alt=""><b>上皿</b><small>15分 · ¥300</small></span></label>
+              <label><input type="radio" name="plate" value="3"><span><img src="./assets/sushi-tokujo-pixel.webp" alt=""><b>特上皿</b><small>25分 · ¥500</small></span></label>
+            </div>
+          </fieldset>
+          <button class="btn btn-complete full" type="submit">＋ レーンに流す</button>
+          <p class="form-hint">初期作業メモが自動で一枚つきます。</p>
+        </form>
+        <section class="case-card">
+          <div class="case-header">
+            <div><span class="eyebrow">Neta case</span><h2>ネタケース</h2></div>
+            <button class="import-button" id="importTasks" type="button">⇩ JSONから取り込む</button>
+            <input id="importFile" type="file" accept="application/json,.json" hidden>
+          </div>
+          <div id="taskList" class="task-list"></div>
+          <button class="btn btn-complete phase-next" id="beginAction">仕込み完了　▶ 実食をはじめる</button>
+        </section>
+      </div>
+    </section>
+
+    <section id="result" class="view" aria-labelledby="resultTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">PHASE 03 / CHECKOUT</p><h1 id="resultTitle">本日の精算</h1></div>
+        <p class="heading-note">今日の仕事を、ちゃんと味わう。</p>
+      </div>
+      <div class="result-grid">
+        <article class="receipt">
+          <div class="receipt-top">寿司GoTo　お会計</div>
+          <div class="receipt-meta"><span id="receiptDate"></span><span>担当：あなた</span></div>
+          <div class="receipt-rule"></div>
+          <div id="receiptItems"></div>
+          <div class="receipt-rule"></div>
+          <dl class="totals">
+            <div><dt>定価小計</dt><dd id="subtotal">¥0</dd></div>
+            <div class="penalty"><dt>鮮度低下</dt><dd id="penaltyTotal">−¥0</dd></div>
+            <div class="grand"><dt>本日のお得額</dt><dd id="earnedTotal">¥0</dd></div>
+          </dl>
+          <div class="receipt-footer">＼ またのご来店をお待ちしております ／<br><span>◆ SUSHI GOTO ◆</span></div>
+        </article>
+        <aside class="master-card">
+          <div class="master-portrait"><img src="./assets/chef-pixel.webp" alt="大将"></div>
+          <p class="eyebrow">大将のひとこと</p>
+          <blockquote id="masterComment">まずは一皿。いい仕事は、いい仕込みからだ。</blockquote>
+          <div class="today-stats">
+            <div><strong id="completedCount">0</strong><small>完食</small></div>
+            <div><strong id="freshRate">—</strong><small>鮮度維持率</small></div>
+          </div>
+          <button class="btn btn-start phase-next" id="backToPrep">次の営業を仕込む　▶</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="journal" class="view" aria-labelledby="journalTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">JOURNAL & RANKING</p><h1 id="journalTitle">営業日誌と番付</h1></div>
+        <p class="heading-note">積み重ねは、裏切らない。</p>
+      </div>
+      <div class="journal-grid">
+        <section class="calendar-card">
+          <div class="calendar-head"><button id="previousMonth" aria-label="前月">‹</button><h2 id="calendarMonth"></h2><button id="nextMonth" aria-label="翌月">›</button></div>
+          <div class="weekdays"><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span><span>日</span></div>
+          <div class="calendar" id="calendar"></div>
+          <div class="legend"><span>ひと息</span><i>🥒</i><i>🍣</i><i>✨</i><i>🐟</i><span>大漁</span></div>
+        </section>
+        <section class="ranking-card">
+          <div class="ranking-head"><span class="eyebrow">MY BEST</span><h2>自己ベスト番付</h2><small id="rankingSummary">営業履歴はまだありません</small></div>
+          <ol id="rankingList"></ol>
+          <div class="my-rank">
+            <span class="rank-num" id="currentRank">—</span>
+            <div><b>本日</b><small id="rankTitle">称号：見習い</small></div>
+            <strong id="rankEarnings">¥0</strong>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="explorer" aria-hidden="true" aria-label="タスク詳細">
+    <div class="drawer-head">
+      <div><span class="eyebrow">TASK EXPLORER</span><h2 id="drawerTaskTitle"></h2></div>
+      <button class="close-button" id="closeExplorer" aria-label="閉じる">×</button>
+    </div>
+    <div class="drawer-body">
+      <div class="asset-list-pane">
+        <div class="pane-title"><b>関連アセット</b><button id="addAsset">＋ 追加</button></div>
+        <div id="assetList"></div>
+      </div>
+      <div class="asset-editor" id="assetEditor"></div>
+    </div>
+  </aside>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

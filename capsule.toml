@@ -1,0 +1,20 @@
+schema_version = "0.3"
+name = "sushigoto"
+version = "0.1.0"
+type = "app"
+runtime = "web/static"
+run = "index.html"
+port = 8080
+
+[metadata]
+display_name = "寿司GoTo"
+description = "ポモドーロと回転寿司を融合したTODO・時間管理アプリ"
+author = "koh0920"
+tags = ["productivity", "pomodoro", "gamification", "japanese"]
+
+[network]
+egress_allow = [
+  "cdn.tailwindcss.com",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com"
+]
