@@ -2,9 +2,6 @@ schema_version = "1"
 name = "sushigoto"
 version = "1.0.0"
 
-[tools]
-python = "3.12"
-
 [run]
 command = ["python3", "server.py"]
 
