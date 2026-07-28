@@ -48,7 +48,40 @@ function migrateState(raw) {
 }
 
 let stored;
-try { stored = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (_) {}
+const isAtoDemo = new URLSearchParams(window.location.search).get("ato-demo") === "1";
+if (isAtoDemo) {
+  stored = {
+    schemaVersion: SCHEMA_VERSION,
+    activeId: 101,
+    phase: "action",
+    tasks: [
+      {
+        id: 101,
+        title: "Capsule の公開手順を確認",
+        plate: 3,
+        items: [
+          { id: "ato-101-note", type: "memo", title: "ゴール", content: "Ready-State から主要操作をすぐ始められること。" },
+          { id: "ato-101-doc", type: "doc", title: "チェックリスト", content: "操作確認 → Snapshot → fresh restore" }
+        ]
+      },
+      {
+        id: 102,
+        title: "Store の説明文を仕上げる",
+        plate: 2,
+        items: [{ id: "ato-102-note", type: "memo", title: "要点", content: "何ができる Capsule かを短く伝える。" }]
+      },
+      {
+        id: 103,
+        title: "公開 Run を操作確認",
+        plate: 1,
+        items: [{ id: "ato-103-note", type: "memo", title: "確認", content: "タイマーを一時停止し、再開する。" }]
+      }
+    ],
+    completed: []
+  };
+} else {
+  try { stored = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (_) {}
+}
 const state = migrateState(stored);
 let secondsLeft = 0;
 let maxSeconds = 0;

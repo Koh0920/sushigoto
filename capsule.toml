@@ -1,20 +1,14 @@
-schema_version = "0.3"
+schema_version = "1"
 name = "sushigoto"
-version = "0.1.0"
-type = "app"
-runtime = "web/static"
-run = "index.html"
+version = "1.0.0"
+
+[run]
+command = ["python3", "server.py"]
+
+[web]
 port = 8080
+bind = "0.0.0.0"
 
-[metadata]
-display_name = "寿司GoTo"
-description = "ポモドーロと回転寿司を融合したTODO・時間管理アプリ"
-author = "koh0920"
-tags = ["productivity", "pomodoro", "gamification", "japanese"]
-
-[network]
-egress_allow = [
-  "cdn.tailwindcss.com",
-  "fonts.googleapis.com",
-  "fonts.gstatic.com"
-]
+[seal_at]
+command = ["python3", "-c", 'import json,urllib.request; state=json.load(urllib.request.urlopen("http://172.16.0.2:8080/__ato/state",timeout=5)); assert state=={"app":"sushigoto","upstream_commit":"56c577941a41cd8826bd73d3120dbc524c1d9d3e","demo_tasks":3,"primary_screen":"action","external_integrations":False,"runtime_downloads":False}']
+timeout_seconds = 30
