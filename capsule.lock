@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "lock_id": "blake3:c8f51f5873223c8516eeb5bdae9b0dc25f0ea8ed5d532bfe142568f49d1b066b",
+  "features": {},
+  "resolution": {},
+  "contract": {},
+  "binding": {},
+  "policy": {},
+  "attestations": {},
+  "execution_contract": {
+    "execution_contract": {
+      "schema": "ato.execution-contract/v1",
+      "source": {
+        "digest": "sha256:ffcee93dbc1a9bfd5c4e0b1f57f1867d220a814058fb9b8d1fbb129b132242f8",
+        "projection_digest": "blake3:98363ebb40286d90163b7882a2db5dca4e2022d6b8792f37015b043006dee6cc"
+      },
+      "target": {
+        "os": "linux",
+        "architecture": "amd64",
+        "abi": "gnu",
+        "libc": "glibc"
+      },
+      "runtime": {
+        "kind": "python",
+        "digest": "sha256:00af38ae2ed311628970782e8a2d7f014d8909dbc63cb97bc0a158187f4db045",
+        "dynamic_contract_digest": "blake3:ee4a774cbe0c995a668f619a24460fc6aacd245000bb8b88599172f2e7a61d2c"
+      },
+      "launch": {
+        "argv": [
+          "python3",
+          "server.py"
+        ],
+        "cwd": "/app",
+        "process_model_digest": "blake3:ab5b735c0b16c4e34e4976b342a14c5baff07ae544dafe7529572870724b47d1",
+        "environment_policy_digest": "blake3:509a2efeb3c632e743194e94676bfaddbd182d57b4f10a5a609581c79279370e"
+      },
+      "filesystem": {
+        "view_digest": "blake3:3bf6e5335ff2a38398254df6050eb08b6c914940885e58f554d8397d9142523c",
+        "topology_digest": "blake3:9d5f1f3c3522a26415bfc9b8374645704b6df3161d8ad2dcfd0995ce5693f4ca",
+        "readonly_layers": [
+          "blake3:3bf6e5335ff2a38398254df6050eb08b6c914940885e58f554d8397d9142523c"
+        ],
+        "writable_paths": [
+          "/run",
+          "/tmp",
+          "/var/tmp"
+        ]
+      },
+      "policy": {
+        "network_digest": "blake3:7bb92cc63f22b7dcfaee1ff5e12c653804b4098ea1eeecaf381a5d7e77cfa98e",
+        "capability_digest": "blake3:a5792d728caabfdbe310e06c86b04eda5fe18654e857d26e3720eecfc9a29404",
+        "filesystem_digest": "blake3:706416f08fe3406c0068692d284679ddddce4c71818fbd80eeb2643eba64e990"
+      },
+      "guest_surface": {
+        "bind_address": "0.0.0.0",
+        "protocol": "ato.web-surface.v1",
+        "port": 8080
+      }
+    },
+    "execution_id": "blake3:88709409a76c0407983729334ad8309f632d7a351afebad49b59a4c05f5fb617"
+  }
+}
